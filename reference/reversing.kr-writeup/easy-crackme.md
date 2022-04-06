@@ -1,3 +1,7 @@
+---
+description: Writeup for Easy Crackme from Reversing.kr
+---
+
 # Easy Crackme
 
 ## Overview
