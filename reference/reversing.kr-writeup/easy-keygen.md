@@ -65,3 +65,15 @@ _test ecx ecx will check of our string is zero or not. In our case its not. So, 
 _On top esi is being comapred to 3. If its 3, itsget XORed by itself, which will make esi zero. Then it goes to next block and the again come back and compare it with 3. Therefore, during loop our esi will range in between 0 to 2._&#x20;
 
 _In our big block of  code, we move var\_130 to ecx._&#x20;
+
+_If we look at the starting of our main fucntion, we cna see the var\_130 getting populated with some values._&#x20;
+
+![](../../.gitbook/assets/var\_130.png)
+
+_Afterwards, our name\_var is moved into edx. Now edx and ecx is  getting xored. The result is then pushed into stack as parameter. Then theres call to a fucntion sub\_401150._
+
+&#x20;_I tried checking out this fucntion. BUt it contain more functin call inside. So, its better to see the working of this function dynamically._
+
+_I am going to open the executable in x32 dbg._
+
+__
