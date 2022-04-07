@@ -120,6 +120,8 @@ After this, the **`var_C8`**(contain XORed input name) is loaded into `esi` and 
 
 In further code, we see the same block of code as we have seen in our previous writeup [Easy Crackme](easy-crackme.md), these blocks will compare our **`name_var`**(contain serial number) with **`var_C8`**, if they match, then we get the success message.&#x20;
 
+### Writing a keygen
+
 So, we have to find the name, which on being XORed will give the serial key provided in ReadMe.txt. For doing so, I am going to reverse the XOR algorithm used above.
 
 {% code title="keygen.py" %}
@@ -154,6 +156,8 @@ print(name)
 In the first part, I am converting the serial into a decimal value, and then in the second, the XOR operation is getting performed with var\_c8 and the key.
 
 ![](../../.gitbook/assets/keygen.png)
+
+### Flag
 
 Running the script, give us the correct name for our serial which is _**`K3yg3nm3`**_. Giving the same input in executable rewards us with a **`"Success"`** message.&#x20;
 
