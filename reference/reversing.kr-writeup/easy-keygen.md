@@ -76,4 +76,30 @@ _Afterwards, our name\_var is moved into edx. Now edx and ecx is  getting xored.
 
 _I am going to open the executable in x32 dbg._
 
-__
+![](../../.gitbook/assets/xor.png)
+
+I searched for the string "Input Name" to set our first breakpoint. Then I traced for our XOR fucntion and set one breakpoint there. Now after running it, It ask for input I provided "BLEHbLEH" and after it hit our second breakpoint of XOR.&#x20;
+
+![](../../.gitbook/assets/stack.png)
+
+If we llok into our register, the ECX contain the first value of var\_130 i.e 10 and the EDX contain first byte of our input string, i.e B.ck in&#x20;
+
+After doing the XOR operation of ascii 'B' and 0x10, the result is  hexadecimal 52, which stored back in avr\_c8 as string "52". Same for second iteration:
+
+![](../../.gitbook/assets/stack\_1.png) ![](../../.gitbook/assets/stack\_2.png)
+
+Its stores the second charater 'L' into stack and then XOR it with hexadecimal 20 and concatenate the result as string in var\_C8.
+
+This loop will go on till the end of the string.&#x20;
+
+Let go back to our IDA, to  analyse the rest of code.&#x20;
+
+![ ](../../.gitbook/assets/swrial.png)
+
+This block is same as we seen before, Its prints the "Input Serial" on command line and make a scanf call for user input. And the inckled in put is stored into our variable name\_var.
+
+After this, the var_c8(contain XORed input name) is loaded into esi and name_\_var is loaded into eax.
+
+In further code we see the same block of code as we seen in our previous writeup Easy Crackme, which will comapred our name_var(contain serial number) with var_c8, if they match or not. Then we get the success message.&#x20;
+
+So, we have to find the name,&#x20;
