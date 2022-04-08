@@ -2,7 +2,7 @@
 
 Hi Guys! :wave:Welcome to my blog.
 
-I go by the name _E13V3N_ :purple\_heart: on it the internet. I have started a journey to learn advanced RE and Malware Analysis.
+I go by the name _E13V3N_ :purple\_heart: on the internet. I have started a journey to learn advanced RE and Malware Analysis.
 
 It's a personal blog where I will be documenting my learning with some CTFs writeups, walkthroughs, and some research related to malware analysis. Anything posted here is my own work and is not affiliated with any company that I work/worked for.
 
