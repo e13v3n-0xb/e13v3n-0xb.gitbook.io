@@ -8,7 +8,7 @@ It's a personal blog where I will be writing about some CTFs writeup, malware an
 
 I hope this blog will turn out useful for you. :sparkles:
 
-Feel free for any suggestions/feedback/corrections.
+Feel free to give any suggestions/feedback/corrections.
 
 * _****_[_**@e13v3n\_0xB**_](https://twitter.com/e13v3n\_0xb)_****_
 * _****_:e-mail: _****** **<mark style="color:blue;">**e13v3n0xb@gmail.com**</mark>_
