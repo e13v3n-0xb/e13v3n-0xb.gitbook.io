@@ -1,6 +1,6 @@
 # #whoami
 
-Hi Guys! :wave:Welcome to my blog.
+Hell there!:wave: Welcome to my blog.
 
 I go by the name _E13V3N_ :purple\_heart: on the internet. I have started a journey to learn advanced RE and Malware Analysis.
 
