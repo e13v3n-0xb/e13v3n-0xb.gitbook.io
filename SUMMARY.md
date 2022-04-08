@@ -2,9 +2,9 @@
 
 * [#whoami](README.md)
 
-## Reference
+## ✨ Writeups
 
-* [💾 Reversing.kr - Writeup](reference/reversing.kr-writeup/README.md)
-  * [Easy Crackme](reference/reversing.kr-writeup/easy-crackme.md)
-  * [Easy Keygen](reference/reversing.kr-writeup/easy-keygen.md)
-  * [Easy Unpack](reference/reversing.kr-writeup/easy-unpack.md)
+* [💾 Reversing.kr - Writeup](writeups/reversing.kr-writeup/README.md)
+  * [Easy Crackme](writeups/reversing.kr-writeup/easy-crackme.md)
+  * [Easy Keygen](writeups/reversing.kr-writeup/easy-keygen.md)
+  * [Easy Unpack](writeups/reversing.kr-writeup/easy-unpack.md)
