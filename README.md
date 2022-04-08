@@ -11,4 +11,4 @@ I hope you enjoy reading my work and learn a thing or two. :sparkles:
 Feel free to share any suggestions/feedback/corrections.
 
 * _****_[_**@e13v3n\_0xB**_](https://twitter.com/e13v3n\_0xb)_****_
-* _****_:e-mail: _****** **<mark style="color:blue;">**e13v3n0xb@gmail.com**</mark>_
+* _<mark style="color:blue;">**e13v3n0xb@gmail.com**</mark>_ :e-mail:_<mark style="color:blue;">****</mark>_
