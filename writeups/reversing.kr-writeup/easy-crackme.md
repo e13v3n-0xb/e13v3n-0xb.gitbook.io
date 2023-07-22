@@ -8,7 +8,7 @@ description: Writeup for Easy Crackme from Reversing.kr
 
 Hola Amigos!!
 
-Today I am trying the first crackme from _****_ [_**reversing.kr**_](http://reversing.kr/challenge.php) _****_ marked as _100_ points. It's a simple window crackme that uses some string comparisons to check and validate the input string.&#x20;
+Today I am trying the first crackme from [_**reversing.kr**_](http://reversing.kr/challenge.php) marked as _100_ points. It's a simple window crackme that uses some string comparisons to check and validate the input string.&#x20;
 
 Here is my little attempt to solve the first challenge.&#x20;
 
@@ -40,7 +40,7 @@ On opening the file in IDA. We can see the call to the **DialogBoxParam** with t
 
 ![](<../../.gitbook/assets/lpdialog (1).png>)
 
-On opening the DialogFunc in the graph, we can see a branch ** **_**`loc40105E`** _ calling t_he **En**_**dDialog** API which will invoke when the Dialog box closes. So, we dont wanna go there.&#x20;
+On opening the DialogFunc in the graph, we can see a branch _**`loc40105E`**_ calling t_he **En**_**dDialog** API which will invoke when the Dialog box closes. So, we dont wanna go there.&#x20;
 
 The other branch _**`loc4041049`**  could be our main functionality as it makes a call to another function **`sub_401080`**_ which seems interesting as it pushes _**Dlg**_(handle of the dialog box) just before it.&#x20;
 
@@ -48,7 +48,7 @@ The other branch _**`loc4041049`**  could be our main functionality as it makes 
 
 ![](../../.gitbook/assets/lpdialog.png)
 
-On inspecting the function _**`sub_401080`** we see a call to **GetDlgItemText** _ which implies that it takes the input from the dialog box and put it into a string. And if we will just look at the stack variable on top, we have four variables _**`string`**_, _**`var_63`**, **`var_62` **_ and _**`var_60`**_.
+On inspecting the function _**`sub_401080`** we see a call to **GetDlgItemText**_ which implies that it takes the input from the dialog box and put it into a string. And if we will just look at the stack variable on top, we have four variables _**`string`**_, _**`var_63`**, **`var_62`**_ and _**`var_60`**_.
 
 These variables are kind of too close to each other with respect to their offset. So, it seems like the variable _**`string`**_ is the first part of the password, _**`var_63`**_ is one byte down from _**`string`**_. So, _**`var_63`**_ must be _**`string[1]`**_  and same with _**`var_62`**_ and _**`var_60`**_. So, we can conclude :
 
