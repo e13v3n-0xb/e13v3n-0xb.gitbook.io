@@ -8,6 +8,7 @@ I hope you enjoy reading my work and learn a thing or two. :sparkles:
 
 Feel free to share any suggestions/feedback/corrections.
 
-* <mark style="color:purple;">**B**</mark><mark style="color:blue;">**lue Bird:**</mark>  [<mark style="color:purple;">@E13V3N\_0XB</mark>](https://twitter.com/E13V3N\_0XB)
-* <mark style="color:purple;"><mark style="color:blue;">**Email:**<mark style="color:blue;"></mark> <mark style="color:purple;"><mark style="color:blue;"> </mark><mark style="color:purple;"><mark style="color:blue;">e13v3n0xb@gmail.com<mark style="color:blue;"></mark>&#x20;
+* <mark style="color:blue;">**X:**</mark>  [<mark style="color:purple;">@E13V3N\_0XB</mark>](https://twitter.com/E13V3N_0XB)
+* <mark style="color:purple;">**Email:**</mark> <mark style="color:purple;"></mark><mark style="color:purple;">e13v3n0xb@gmail.com</mark>&#x20;
+* <mark style="color:purple;">**Linkedin:**</mark> [<mark style="color:purple;">anushka-soni-0xb</mark>](https://www.linkedin.com/in/anushka-soni-0xb?)&#x20;
 
