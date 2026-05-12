@@ -2,7 +2,7 @@
 
 ### 1. Objective
 
-This article present a practical technique for achieving early-stage code execution in ELF binaries by leveraging `preinit_array` mechanism. The technique uses combination of payload injection within existing segment padding and manipulation of the dynamic table to redirect execution via DT\_PREINIT\_ARRAY.&#x20;
+This article presents a practical technique for achieving early-stage code execution in ELF binaries by leveraging `preinit_array` mechanism. The technique uses a combination of payload injection within existing segment padding and manipulation of the dynamic table to redirect execution via DT\_PREINIT\_ARRAY.&#x20;
 
 Since `preinit_array` is executed very early in the startup process. The `preinit_array` runs before `.init`, `.init_array`, and `main()`, making it the earliest possible hook point in an ELF binary, this allows control to be gained before standard initialization routines run.
 
@@ -10,7 +10,7 @@ One important constraint is that this technique currently works fine with ET\_EX
 
 ### 2. Introduction
 
-ELF binary infection has a long history in UNIX security research, starting with 27 year old work of  Silvio Cesaro's 1988 paper `"UNIX ELF Parasites and Virus"`\[1] which introduced the Text segment padding infection technique. This infection exploited the page-alignment gap between text and data segments padding bytes. Parasite code fills that gap, then `e_entry` is redirected to it, and after the payload execution is complete, the parasite jumps to the original entry.
+ELF binary infection has a long history in UNIX security research, building on old work of  Silvio Cesare's 1998 paper `"UNIX ELF Parasites and Virus"`\[1] which introduced the Text segment padding infection technique. This infection exploited the page-alignment gap between text and data segments padding bytes. Parasite code fills that gap, then `e_entry` is redirected to it, and after the payload execution is complete, the parasite jumps to the original entry.
 
 ```
 key:
@@ -32,7 +32,7 @@ key:
 
 ### 3. ELF Internal
 
-Before going further, we gotta understand how ELF internals actually looks.
+Before going further, we need a basic understanding of how ELF internals actually looks.
 
 The ELF file is divided in two parts. The first is ELF header and the second is ELF data.
 
@@ -70,7 +70,7 @@ Program header makes sure to do following thing:
 
 #### 3.1  p\_type = PT\_LOAD&#x20;
 
-Going bit more deeper into the program header, The first entry in program header structure is segment type which can be `PT_LOAD`, `PT_DYNAMIC`, `PT_INTERP` and so on.&#x20;
+Going a bit deeper into the program header, The first entry in program header structure is segment type which can be `PT_LOAD`, `PT_DYNAMIC`, `PT_INTERP` and so on.&#x20;
 
 Your code, your global variables, your constants,  lives inside a `PT_LOAD` segment. The kernel reads the program header table, finds every entry with `p_type == PT_LOAD`, and maps each one into the process's virtual address space using `mmap` .
 
@@ -91,24 +91,12 @@ The byte offset from the beginning of the file where this segment's data starts.
 
 #### 3.4 p\_filesz and p\_memsz
 
-Now another entry in structure that trip people up the most are `p_filesz` and `p_memsz`:
+Now another entry in structure that trips people up the most are `p_filesz` and `p_memsz`:
 
 * **`p_filesz`** — how many bytes the kernel reads from the binary file and maps into memory
 * **`p_memsz`** — how many bytes the segment actually occupies in virtual memory
 
 These two are allowed to differ, and they do. The classic example is `.bss` — uninitialized global variables. They take up zero space in the file  but they need real memory at runtime. So `p_memsz > p_filesz`, and the kernel zero-fills the gap.&#x20;
-
-#### ~~3.5 p\_align~~
-
-~~Follwing the ELF specification, p\_vaddr and p\_offset in the Program header must be congruent together, to modulo the page size.~~
-
-~~`p_align` defines the alignment requirement for the segment in memory. Its value is almost always `0x1000` — 4096 bytes, the size of one memory page on x86-64. In plain terms:~~
-
-```
-p_vaddr % p_align == p_offset % p_align
-```
-
-~~This ensures that the offset of the segment inside its page is the same in both the file and in memory~~
 
 #### 3.6 p\_type  = PT\_DYNAMIC
 
@@ -145,7 +133,7 @@ Initialization Order:
 
 ### 4. DT\_PREINIT\_ARRAY WHO???
 
-So, according to the initialization order we just saw, there's something called `DT_PREINIT_ARRAY` at the top. If you have been writing C or C++ on Linux for years and never heard of `DT_PREINIT_ARRAY` , its alright. `DT_PREINIT_ARRAY` is a dynamic table entry that points to an array of function pointers. When `ld.so` finds this entry, it calls each function in that array, in order, before anything else in the binary runs including `.init`, `main()` or whatsoever.&#x20;
+So, according to the initialization order we just saw, there's something called `DT_PREINIT_ARRAY` at the top. If you have been writing C or C++ on Linux for years and never heard of `DT_PREINIT_ARRAY` , it's alright. `DT_PREINIT_ARRAY` is a dynamic table entry that points to an array of function pointers. When `ld.so` finds this entry, it calls each function in that array, in order, before anything else in the binary runs including `.init`, `main()` or whatsoever.&#x20;
 
 It comes as a pair of entries in the dynamic table:
 
@@ -332,7 +320,7 @@ struct PayloadInfo {
 
 #### 6.3 Read ELF Header and PROGRAM Header&#x20;
 
-Filter binary to consider only ELF and where e\_type is ET\_EXEC, then read the program header.
+The function filters the input binary by considering only ELF files and further where `e_type` is `ET_EXEC`, then read the program header.
 
 ```cpp
 
@@ -532,11 +520,11 @@ The infection process combines three operations: payload injection inside an exe
 
 The resulting proof of concept demonstrates that early-stage execution can be achieved entirely through loader metadata manipulation while preserving normal execution flow of the host program.
 
-### 8. Final Words
+### 8. BYEEE!!!!
 
 More recently one paper published on tmp.out zine, Isra's "House of Pain"\[2] which also demonstrated a modern x86-64 implementation of the same idea, with a twist of exploiting by identifying pattern in section layout to inject parasite without modifying any header. It patches the last byte of .init to 0xc3 (ret) on x86-64, with a jump into section padding. The parasite lives in that padding, chains into .fini padding for more space, and returns cleanly.&#x20;
 
-That paper is intrigued me to look further into Execution flow and i stumbled upon preinit\_array which almost no one took benefit in anything. The fun thing while doing this research was how `ld.so` does exactly what the System V ABI tells it to do.&#x20;
+That paper intrigued me to look further into Execution flow and i stumbled upon preinit\_array which almost no one took benefit in anything. The fun thing while doing this research was how `ld.so` does exactly what the System V ABI tells it to do.&#x20;
 
 But still there is lot of limitation in this current work which i am focusing to work upon in next part.
 
