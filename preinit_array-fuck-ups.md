@@ -98,7 +98,7 @@ Now another entry in structure that trips people up the most are `p_filesz` and 
 
 These two are allowed to differ, and they do. The classic example is `.bss` — uninitialized global variables. They take up zero space in the file  but they need real memory at runtime. So `p_memsz > p_filesz`, and the kernel zero-fills the gap.&#x20;
 
-#### 3.6 p\_type  = PT\_DYNAMIC
+#### 3.5 p\_type  = PT\_DYNAMIC
 
 Lets move on to the one more segment which would be used in this POC - PT\_DYNAMIC
 
@@ -325,7 +325,7 @@ The function filters the input binary by considering only ELF files and further 
 ```cpp
 
 //Reading ELF header to filer ELF and ET_EXEC...
-void read_elf_header(ELF &elf){
+int read_elf_header(ELF &elf){
     elf.file.seekg(0);
     elf.file.read((char*)&elf.ehdr, sizeof( Elf64_Ehdr));
 
@@ -528,7 +528,7 @@ That paper intrigued me to look further into Execution flow and i stumbled upon 
 
 But still there is lot of limitation in this current work which i am focusing to work upon in next part.
 
-The primary limitation is the restriction to non-PIE binaries. As modern Linux distributions increasingly default to PIE compilation, extending this technique to PIE binaries via relocation table manipulation is the natural next step, and will be the subject of .
+The primary limitation is the restriction to non-PIE binaries. As modern Linux distributions increasingly default to PIE compilation, extending this technique to PIE binaries via relocation table manipulation is the natural next step, and will be the subject of future work.
 
 Secondly, The current implementation also assumes there is sufficient slack space after the terminating `DT_NULL` entry inside the `.dynamic` section. While this is commonly true in practice, the infector does not currently verify available space before inserting new dynamic entries.
 
