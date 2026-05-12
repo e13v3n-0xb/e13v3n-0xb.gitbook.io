@@ -32,9 +32,7 @@ key:
 
 ### 3. ELF Internal
 
-Before going further, we need a basic understanding of how ELF internals actually looks.
-
-The ELF file is divided in two parts. The first is ELF header and the second is ELF data.
+Before continuing, we need a basic understanding of ELF internals.The ELF file is divided in two parts. The first is ELF header and the second is ELF data.
 
 ELF header is the first component of ELF file, containing information about ELF file, like its type, architecture, moreover the whole file organization.&#x20;
 
@@ -282,7 +280,7 @@ unsigned char payload[] = {
     0x48,0xc7,0xc0,0x01,0x00,0x00,0x00,
     0x48,0xc7,0xc7,0x01,0x00,0x00,0x00,
     0x48,0x8d,0x35,0x0a,0x00,0x00,0x00,
-    0x48,0xc7,0xc2,0x12,0x00,0x00,0x00,
+    0x48,0xc7,0xc2,0x0f,0x00,0x00,0x00,
     0x0f,0x05,
     0xc3,
     '[','P','R','E','I','N','I','T',']',' ',
@@ -418,19 +416,19 @@ Infector appends an 8-byte function pointer inside the writable (`RW`) segment. 
 ```cpp
 uint64_t write_pointer(ELF &elf, uint64_t payload_vaddr)
 {
-    uint64_t page_size = 0x1000;
-    uint64_t rw_end_vaddr = elf.rw_seg->p_vaddr + elf.rw_seg->p_memsz;
-    
-    uint64_t pointer_vaddr = align_up(rw_end_vaddr, page_size);
-    uint64_t pointer_file_offset = elf.rw_seg->p_offset + (pointer_vaddr - elf.rw_seg->p_vaddr);
+    uint64_t pointer_vaddr = elf.rw_seg->p_vaddr + elf.rw_seg->p_filesz;
 
-    elf.rw_seg->p_memsz = (pointer_vaddr - elf.rw_seg->p_vaddr) + 8;
-    elf.rw_seg->p_filesz = elf.rw_seg->p_memsz;
-
-    save_program_headers(elf);
+    uint64_t pointer_file_offset = elf.rw_seg->p_offset + elf.rw_seg->p_filesz;
 
     elf.file.seekp(pointer_file_offset);
     elf.file.write((char*)&payload_vaddr, 8);
+
+    elf.rw_seg->p_filesz += 8;
+
+    if (elf.rw_seg->p_memsz < elf.rw_seg->p_filesz)
+        elf.rw_seg->p_memsz = elf.rw_seg->p_filesz;
+
+    save_program_headers(elf);
 
     return pointer_vaddr;
 }
@@ -524,7 +522,7 @@ The resulting proof of concept demonstrates that early-stage execution can be ac
 
 More recently one paper published on tmp.out zine, Isra's "House of Pain"\[2] which also demonstrated a modern x86-64 implementation of the same idea, with a twist of exploiting by identifying pattern in section layout to inject parasite without modifying any header. It patches the last byte of .init to 0xc3 (ret) on x86-64, with a jump into section padding. The parasite lives in that padding, chains into .fini padding for more space, and returns cleanly.&#x20;
 
-That paper intrigued me to look further into Execution flow and i stumbled upon preinit\_array which almost no one took benefit in anything. The fun thing while doing this research was how `ld.so` does exactly what the System V ABI tells it to do.&#x20;
+That paper intrigued me to look further into execution flow and i stumbled upon preinit\_array, rarely discussed. The fun thing while doing this research was how `ld.so` does exactly what the System V ABI tells it to do.&#x20;
 
 But still there is lot of limitation in this current work which i am focusing to work upon in next part.
 
