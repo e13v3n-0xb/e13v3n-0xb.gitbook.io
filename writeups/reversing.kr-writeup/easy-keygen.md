@@ -34,7 +34,7 @@ On Inspecting it in IDA. it shows us the graph from the entry point. It's not th
 
 When we executed our file, it gave us the string **`"Input Name"`**. So, I am going to search the same string in IDA to trace the main function. Just go to `Search->text`  enter your string and it will show the data section where the string resides and in which function it is used.&#x20;
 
-![](../../.gitbook/assets/main\_function.png)
+![](../../.gitbook/assets/main_function.png)
 
 #### Inspecting function sub\_401000
 
@@ -42,7 +42,7 @@ On searching the string, we can see it used in the function **`sub_401000`**. On
 
 ![](<../../.gitbook/assets/scanf (1).png>)
 
-Analyzing our main function **`sub`**_**`401000`**._ We see our string _"**`Input Name`**"_ getting pushed onto the stack as a parameter, and then there is a call t_o **`sub`**_**`4011B9`** function. which probably works as printf function, printing our string on the command prompt. You can make sure by running it in any debugger.&#x20;
+Analyzing our main function **`sub`**_**`401000`**._ We see our string _"**`Input Name`**"_ getting pushed onto the stack as a parameter, and then there is a call &#x74;_&#x6F; **`sub`**_**`4011B9`** function. which probably works as printf function, printing our string on the command prompt. You can make sure by running it in any debugger.&#x20;
 
 ![](../../.gitbook/assets/printf.png)
 
@@ -58,9 +58,9 @@ After our input of **`name_var`** get loaded into `edi`, `ecx` have 0FFFFFFFFh.&
 
 > [_<mark style="background-color:yellow;">**REPNE**</mark>_](https://faydoc.tripod.com/cpu/repne.htm) _<mark style="background-color:yellow;">**(repeat while not equal)**</mark>_
 >
-> _<mark style="color:blue;background-color:yellow;">**SCASB**</mark>** **<mark style="background-color:yellow;">**(byte comparison); ES:(E)DI is assumed to be the memory operand and AL, AX, or EAX is assumed to be the register operand.**</mark>_
+> _<mark style="color:blue;background-color:yellow;">**SCASB**</mark>**&#x20;**<mark style="background-color:yellow;">**(byte comparison); ES:(E)DI is assumed to be the memory operand and AL, AX, or EAX is assumed to be the register operand.**</mark>_
 
-So, SCASB will search for byte `eax` hold_(which has become zero already)_ inside the memory held by `edi`_(which contains our name\_var)._ While REPNE will repeat all this until this condition is not equal.
+So, SCASB will search for byte `eax` hol&#x64;_(which has become zero already)_ inside the memory held by `edi`_(which contains our name\_var)._ While REPNE will repeat all this until this condition is not equal.
 
 In simpler terms, this call will check for the end of our string and go on until it will reach the end of our string **`name_var`** which will be terminated by the null terminator. Meanwhile, `ecx` will decrement after every comparison.&#x20;
 
@@ -84,7 +84,7 @@ Coming to our block which does some stuff, it moves **`var_130`** to `ecx`.&#x20
 
 If we look at the starting of our main function, we can see the **`var_130`** getting populated with some values.&#x20;
 
-![](../../.gitbook/assets/var\_130.png)
+![](../../.gitbook/assets/var_130.png)
 
 Afterward, our **`name_var`** is moved into `edx`. Now `edx` and `ecx` is getting XORed. The result is then pushed into the stack as a parameter. Then there's a call to a function _**`sub_401150`**_.
 
@@ -104,15 +104,7 @@ If we look into our register, the **`ecx`** contain the first value of **`var_13
 
 After doing the XOR operation of ascii **`'B'`** and `0x10,` the result is hexadecimal `52`, which is stored back in `var_C8` as string `"52"`. Same for the second iteration:
 
-<div align="center">
-
-<img src="../../.gitbook/assets/stack_2.png" alt="">
-
- 
-
-<img src="../../.gitbook/assets/stack_1.png" alt="">
-
-</div>
+<div align="center"><img src="../../.gitbook/assets/stack_2.png" alt=""> <img src="../../.gitbook/assets/stack_1.png" alt=""></div>
 
 It stores the second character 'L' into `edx` and then XOR it with hexadecimal `0x20` and concatenates the result '6C' as a string in `var_C8`. Now the value is "526C" as seen above.
 

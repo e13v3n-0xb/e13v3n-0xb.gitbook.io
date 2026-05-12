@@ -1,6 +1,7 @@
 # Table of contents
 
 * [#whoami](README.md)
+* [PreInit\_array fuck ups](preinit_array-fuck-ups.md)
 
 ## ✨ Writeups
 
@@ -11,5 +12,5 @@
 
 ## 🤖 MAL DEV
 
-* [Code & Process Injecction](mal-dev/code-and-process-injecction/README.md)
-  * [Shellcode Injection](mal-dev/code-and-process-injecction/shellcode-injection.md)
+* [Code & Process Injection](mal-dev/code-and-process-injection/README.md)
+  * [Shellcode Injection](mal-dev/code-and-process-injection/shellcode-injection.md)

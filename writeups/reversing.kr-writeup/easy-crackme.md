@@ -24,7 +24,7 @@ On executing, it gives us an dialog box which contains an input field to enter a
 
 Let's input some gibberish string to check.&#x20;
 
-![](../../.gitbook/assets/Easy\_CRackme\_2.png)
+![](../../.gitbook/assets/Easy_CRackme_2.png)
 
 So, It seems like a password checker. Alright, now we know we have to enter a password, And if the password is wrong, it will give us a pop-up "_**Incorrect Password**_".
 
@@ -34,13 +34,13 @@ So, let's open this binary in IDA Freeware. We already know the executable creat
 
 On opening the file in IDA. We can see the call to the **DialogBoxParam** with the field **lpDialogFunc** having the function name **DialogFunc**. This function seems like it can help us and might be responsible for the input validation.
 
-![](../../.gitbook/assets/eASY\_crackme\_ida1.png)
+![](../../.gitbook/assets/eASY_crackme_ida1.png)
 
 ### Inspecting DialogFunc
 
 ![](<../../.gitbook/assets/lpdialog (1).png>)
 
-On opening the DialogFunc in the graph, we can see a branch _**`loc40105E`**_ calling t_he **En**_**dDialog** API which will invoke when the Dialog box closes. So, we dont wanna go there.&#x20;
+On opening the DialogFunc in the graph, we can see a branch _**`loc40105E`**_ calling &#x74;_&#x68;e **En**_**dDialog** API which will invoke when the Dialog box closes. So, we dont wanna go there.&#x20;
 
 The other branch _**`loc4041049`**  could be our main functionality as it makes a call to another function **`sub_401080`**_ which seems interesting as it pushes _**Dlg**_(handle of the dialog box) just before it.&#x20;
 
@@ -76,7 +76,7 @@ So, far we have:
 
 > _**`password  = *a5y*`** (\* = wildcard)_
 
-![](../../.gitbook/assets/cmp\_3.png)
+![](../../.gitbook/assets/cmp_3.png)
 
 In the next branch, we see a string "_**R3versing**_" is passed into _**`esi`**_ and our _**`string[4]`**_ is passed into _**`eax,`**_ which further goes into string comparison loop which checks each character of _**`string[4]`**_ matches with "_**R3versing**_" or not. Hence, we got the last part of our password too. Now, we are left with the first part.
 
