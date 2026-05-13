@@ -564,7 +564,9 @@ Finally the paper from which i got inspired write a parasite which is self-repli
 
 \[2] isra. "House of Pain." tmp0ut, 2024. https://tmpout.sh
 
+\-------------------------------------------------------------------------------------------------
 
+P.S The code can be found hereee: [https://github.com/e13v3n-0xb/DT\_PREINIT\_ARRAY-Abuse-for-Early-Stage-Execution](https://github.com/e13v3n-0xb/DT_PREINIT_ARRAY-Abuse-for-Early-Stage-Execution)
 
 
 
