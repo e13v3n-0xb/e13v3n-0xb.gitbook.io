@@ -1,7 +1,13 @@
 ---
-description: DT_PREINIT_ARRAY Abuse for Early-Stage Execution
+description: DT_PREINIT_ARRAY Abuse for Early-Stage Execution!
+icon: alien
+coverY: 0
+coverHeight: 147
 layout:
   width: default
+  cover:
+    visible: true
+    size: full
   title:
     visible: true
   description:
