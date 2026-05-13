@@ -1,4 +1,24 @@
-# PreInit\_array fuck ups
+---
+description: DT_PREINIT_ARRAY Abuse for Early-Stage Execution
+layout:
+  width: default
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+---
+
+# The Early Bird Gets the Loader
 
 ### 1. Objective
 
@@ -160,7 +180,7 @@ There are tools like AddressSanitizer (ASan) and ThreadSanitizer (TSan) that nee
 
 #### 5.1 Goal
 
-The main goal of "DT\_PREINIT\_ARRAY FUCK UPS" is to modify an existing ELF executable in such a way that our parasite code gets executed through the `DT_PREINIT_ARRAY` callback, while the original program continues to run normally without any visible breakage. In other words, instead of redirecting `e_entry` like traditional ELF parasites, we want the dynamic loader itself to invoke our payload as part of the legitimate startup sequence.
+The main goal of this POC is to modify an existing ELF executable in such a way that our parasite code gets executed through the `DT_PREINIT_ARRAY` callback, while the original program continues to run normally without any visible breakage. In other words, instead of redirecting `e_entry` like traditional ELF parasites, we want the dynamic loader itself to invoke our payload as part of the legitimate startup sequence.
 
 #### 5.2 Algorithm Overview
 

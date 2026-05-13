@@ -1,7 +1,7 @@
 # Table of contents
 
 * [#whoami](README.md)
-* [PreInit\_array fuck ups](preinit_array-fuck-ups.md)
+* [The Early Bird Gets the Loader](the-early-bird-gets-the-loader.md)
 
 ## ✨ Writeups
 
